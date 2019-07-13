@@ -10,11 +10,13 @@ class App extends Component {
   state = {
     friends,
     score: 0,
-    correctNotcorrect: false,
-    topguesses: 0
+    correctNotcorrect: undefined,
+    topguesses: 0,
+    clickedFriends: []
   };
 
-  shuffleFriend = () => {
+  shuffleFriend = (id, e) => {
+    console.log(e.target);
     // Filter this.state.friends for friends with an id not equal to the id being removed
     // const friends = this.state.friends.filter(friend => friend.id !== id);
     const friendship = this.state.friends;
@@ -25,9 +27,25 @@ class App extends Component {
       friendship[i] = friendship[j];
       friendship[j] = temp;
     }
+
+    let tempArr = [...this.state.clickedFriends];
+    tempArr.push(id);
+    if (this.state.clickedFriends.includes(id)) {
+
+    }
+
     // Set this.state.friends equal to the new friends array
     this.setState({ friends: friendship });
+    this.setState({ score: this.state.score + 1, correctNotcorrect: true });
+    this.setState({ clickedFriends: tempArr });
+    console.log(this.state.clickedFriends);
+
   };
+
+  resetScore = () => {
+    this.setState({ score: 0 });
+    this.setState({ correctNotcorrect: false });
+  }
 
   // Map over this.state.friends and render a FriendCard component for each friend object
   render() {
@@ -37,6 +55,7 @@ class App extends Component {
           score={this.state.score}
           correctNotcorrect={this.state.correctNotcorrect}
           topguesses={this.state.topguesses}
+          handleIncrement={this.handleIncrement}
         />
 
         <Title>Clicky Game!
@@ -51,6 +70,7 @@ class App extends Component {
             image={friend.image}
             occupation={friend.occupation}
             location={friend.location}
+            handleIncrement={this.handleIncrement}
           />
         ))}
       </Wrapper>

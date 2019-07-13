@@ -3,7 +3,7 @@ import "./style.css";
 
 function FriendCard(props) {
   return (
-    <div className="card">
+    <div className="card" onClick={(e) => props.shuffleFriend(props.id, e)}>
       <div className="img-container">
         <img alt={props.name} src={props.image} />
       </div>
@@ -20,9 +20,7 @@ function FriendCard(props) {
           </li>
         </ul>
       </div>
-      <span onClick={() => props.shuffleFriend()} className="remove">
-        𝘅
-      </span>
+    
     </div>
   );
 }
